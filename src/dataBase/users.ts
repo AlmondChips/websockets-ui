@@ -5,10 +5,15 @@ export interface User {
   wins: number;
   sessionId: number;
   clientObject: ws.WebSocket;
+  isMyTurn?: boolean;
 }
 
 export class Users {
   static users: User[] = [];
+
+  static getUser(userId: number) {
+    return this.users.find((user) => user.sessionId === userId);
+  }
 
   static addUser(newUser: User) {
     console.log(`Add User with sessionId=${newUser.sessionId}`);

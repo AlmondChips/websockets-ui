@@ -1,4 +1,9 @@
-export type wsMessage = wsReg | wsCreateRoom | wsAddUserToRoom | wsAddShip;
+export type wsMessage =
+  | wsReg
+  | wsCreateRoom
+  | wsAddUserToRoom
+  | wsAddShip
+  | wsAttack;
 
 export type wsReg = {
   type: 'reg';
@@ -41,4 +46,17 @@ export type wsAddShip = {
     indexPlayer: number;
   };
   id: 0;
+};
+
+export type wsAttack = {
+  type: 'attack';
+  data: attackData;
+  id: 0;
+};
+
+export type attackData = {
+  gameId: number;
+  x: number;
+  y: number;
+  indexPlayer: number /* id of the player in the current game */;
 };

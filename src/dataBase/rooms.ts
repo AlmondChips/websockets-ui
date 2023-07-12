@@ -16,25 +16,31 @@ export class Rooms {
   static fullRooms: Room[] = [];
 
   static createRoom(creator: User) {
-    this.roomsCounter = ++this.roomsCounter;
     const newRoom: Room = {
       id: this.roomsCounter,
       players: [creator],
     };
     this.openRooms.push(newRoom);
     console.log('Created room with id', newRoom.id, this.roomsCounter);
+    console.log(`Rooms`, this.openRooms);
+    this.roomsCounter = ++this.roomsCounter;
   }
 
   static addUserToRoom(user: User, roomIndex: number) {
     console.log(`Requested room index: ${roomIndex}`);
-    const roomToFill: Room | undefined = this.openRooms.splice(
-      roomIndex - 1,
-      1,
-    )[0];
-    if (roomToFill) {
+    const roomToFill: Room | undefined = this.openRooms[roomIndex];
+    if (
+      roomToFill &&
+      !roomToFill.players.find((p) => p.sessionId === user.sessionId)
+    ) {
       roomToFill.players.push(user);
+      this.openRooms.splice(roomIndex - 1, 1);
+      console.log('Shodnt log');
     }
+    console.log(roomToFill?.players);
     if (roomToFill?.players.length === 2) {
+      console.log('WTF');
+
       this.fullRooms.push(roomToFill);
       dataBase.games.createGame(roomToFill.players, roomToFill.id);
     }

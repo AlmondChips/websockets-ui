@@ -5,7 +5,7 @@ import { wsReg } from '../../types/wsRequest';
 import { wsResponse } from '../../types/wsResponse';
 import { User } from '../../dataBase/users';
 
-export const actionReg: wsAction = (recivedMessage, wsClient, sessionId) => {
+export const register: wsAction = (recivedMessage, wsClient, sessionId) => {
   const { name, password } = (recivedMessage as wsReg).data;
   console.log('It is reg, with id:', sessionId);
 

@@ -3,7 +3,7 @@ import { wsAction } from '../../types/wsAction';
 import { dataBase } from '../../dataBase/db';
 import { ws } from '../../index';
 
-export const actionCreateRoom: wsAction = (_, __, sessionId) => {
+export const createRoom: wsAction = (_, __, sessionId) => {
   const creator = dataBase.users.users.find(
     (user) => user.sessionId === sessionId,
   );

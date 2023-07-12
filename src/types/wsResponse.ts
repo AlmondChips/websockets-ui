@@ -1,7 +1,12 @@
+import { wsAddShip } from './wsRequest';
+
 export type wsResponse = { type: string; id: number } & (
   | wsRegResponse
   | wsCreateGameResponse
   | wsUpdateRoom
+  | wsAddShip
+  | wsTurn
+  | wsAttackResponse
 );
 export type wsData = wsRegData | wsCreateGameData;
 type wsRegResponse = {
@@ -36,4 +41,21 @@ export type wsRoom = {
 export type wsUser = {
   name: string;
   index: number;
+};
+
+type wsTurn = {
+  data: {
+    currentPlayer: number;
+  };
+};
+
+export type wsAttackResponse = {
+  data: {
+    position: {
+      x: number;
+      y: number;
+    };
+    currentPlayer: number /* id of the player in the current game */;
+    status?: 'miss' | 'killed' | 'shot';
+  };
 };

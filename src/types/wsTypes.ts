@@ -2,7 +2,8 @@ export type wsMessageTypes =
   | 'reg'
   | 'create_room'
   | 'add_user_to_room'
-  | 'add_ships';
+  | 'add_ships'
+  | 'attack';
 export type wsResponseTypes = 'reg' | 'create_game';
 // | 'update_winners'
 
