@@ -1,7 +1,5 @@
-import { sendMessage } from '../utils/ws.utils';
 import { dataBase } from './db';
 import { User } from './users';
-import * as ws from 'ws';
 import { wsResponse } from '../types/wsResponse';
 import { broadCast } from '../utils/broadCast';
 

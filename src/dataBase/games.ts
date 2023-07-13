@@ -2,7 +2,6 @@ import { wsResponse } from '../types/wsResponse';
 import { User } from './users';
 import { broadCast } from '../utils/broadCast';
 import { wsAddShip, attackData } from '../types/wsRequest';
-import * as ws from 'ws';
 import { sendMessage } from '../utils/ws.utils';
 import { dataBase } from './db';
 import { handleShipKill } from './dbUtils/handleShipKill';
@@ -64,7 +63,7 @@ export class Games {
     return this.games.find((game) => game.idGame === gameId);
   }
 
-  static addShips(message: wsAddShip, client: ws.WebSocket) {
+  static addShips(message: wsAddShip) {
     console.log(`Ships objects before adding:`, this.games);
 
     const activeGame = this.getGame(message.data.gameId);

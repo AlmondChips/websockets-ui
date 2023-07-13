@@ -1,13 +1,9 @@
 import * as ws from 'ws';
-import http from 'http';
 import { parseMessageWithData } from '../utils/ws.utils';
 import { requests } from './requests/requestList';
 import { generateSessionId } from '../utils/sessionIdGen';
 
-export const onConnect = (
-  wsClient: ws.WebSocket,
-  req: http.IncomingMessage,
-) => {
+export const onConnect = (wsClient: ws.WebSocket) => {
   const sessionId = generateSessionId();
   console.log(`Client with id(${sessionId}) connected.`);
 

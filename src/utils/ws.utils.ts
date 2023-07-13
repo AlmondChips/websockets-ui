@@ -1,7 +1,6 @@
 import * as ws from 'ws';
-import { wsData, wsResponse } from 'types/wsResponse';
+import { wsResponse } from 'types/wsResponse';
 import { wsMessage } from '../types/wsRequest';
-import { wsResponseTypes } from '../types/wsTypes';
 
 const parseMessageWithData = (data: ws.RawData): wsMessage | void => {
   const parsedData = JSON.parse(data.toString());

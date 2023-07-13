@@ -1,4 +1,3 @@
-import { wsAction } from 'types/wsAction';
 import { ws as wsServer } from '../index';
 import ws from 'ws';
 import { sendMessage } from './ws.utils';

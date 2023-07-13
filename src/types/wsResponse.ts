@@ -8,6 +8,7 @@ export type wsResponse = { type: string; id: number } & (
   | wsTurn
   | wsAttackResponse
   | wsFinish
+  | wsUpdateWinners
 );
 export type wsData = wsRegData | wsCreateGameData;
 type wsRegResponse = {
