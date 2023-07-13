@@ -38,6 +38,7 @@ type Game = {
 
 export class Games {
   static games: Game[] = [];
+
   static createGame(players: User[], gameId: number): void {
     const gameObject: unknown = {
       idGame: gameId,

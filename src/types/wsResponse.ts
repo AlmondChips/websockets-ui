@@ -7,6 +7,7 @@ export type wsResponse = { type: string; id: number } & (
   | wsAddShip
   | wsTurn
   | wsAttackResponse
+  | wsFinish
 );
 export type wsData = wsRegData | wsCreateGameData;
 type wsRegResponse = {
@@ -58,4 +59,21 @@ export type wsAttackResponse = {
     currentPlayer: number /* id of the player in the current game */;
     status?: 'miss' | 'killed' | 'shot';
   };
+};
+
+type wsFinish = {
+  data: {
+    winPlayer: number;
+  };
+};
+
+type wsUpdateWinners = {
+  type: 'update_winners';
+  data: [
+    {
+      name: string;
+      wins: number;
+    },
+  ];
+  id: 0;
 };

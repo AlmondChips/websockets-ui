@@ -40,4 +40,5 @@ export const register: wsAction = (recivedMessage, wsClient, sessionId) => {
   };
   sendMessage(message, wsClient);
   dataBase.rooms.updateRooms();
+  dataBase.users.updateWinners();
 };

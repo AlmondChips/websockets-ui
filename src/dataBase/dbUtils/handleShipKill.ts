@@ -3,6 +3,7 @@ import { Coordinate, Ship } from '../../dataBase/games';
 import { attackData } from '../../types/wsRequest';
 import { broadCast } from '../../utils/broadCast';
 import { User } from '../../dataBase/users';
+import { dataBase } from '../../dataBase/db';
 export const handleShipKill = (
   hittableParts: Coordinate[],
   attackData: attackData,
@@ -34,9 +35,10 @@ export const handleShipKill = (
   );
 
   const players = [attackedPlayer.user, attackSender];
+  const matchPlayers = players.map((p) => p.clientObject);
   attackedPlayer.unabledFields?.push(...result);
   result.forEach((cooridnate) => {
-    const response: wsResponse = {
+    const KillResponse: wsResponse = {
       type: 'attack',
       data: {
         position: {
@@ -47,10 +49,28 @@ export const handleShipKill = (
       },
       id: 0,
     };
-
-    broadCast(
-      response,
-      players.map((p) => p.clientObject),
-    );
+    broadCast(KillResponse, matchPlayers);
   });
+
+  const ships = attackedPlayer.ships;
+  if (!ships) return;
+  const shipsAmount = ships.length;
+  let brokenShips = 0;
+
+  ships.forEach((s) => {
+    if (!s.hittenParts) return;
+    if (s.hittenParts.length === s.length) brokenShips++;
+  });
+  if (shipsAmount === brokenShips) {
+    const finishResponse = {
+      type: 'finish',
+      data: {
+        winPlayer: attackSender.sessionId,
+      },
+      id: 0,
+    };
+    broadCast(finishResponse, matchPlayers);
+    dataBase.users.setWinner(attackSender);
+    dataBase.users.updateWinners();
+  }
 };

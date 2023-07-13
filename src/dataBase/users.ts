@@ -1,3 +1,5 @@
+import { wsResponse } from '../types/wsResponse';
+import { broadCast } from '../utils/broadCast';
 import ws from 'ws';
 export interface User {
   name: string;
@@ -23,5 +25,23 @@ export class Users {
       throw Error('User already exists!');
     }
     this.users.push(newUser);
+  }
+
+  static setWinner(winner: User) {
+    console.log('UP win');
+
+    winner.wins++;
+  }
+
+  static updateWinners() {
+    const response: unknown = {
+      type: 'update_winners',
+      data: this.users.map((user) => {
+        return { name: user.name, wins: user.wins };
+      }),
+      id: 0,
+    };
+
+    broadCast(response as wsResponse);
   }
 }
