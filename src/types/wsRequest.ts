@@ -3,7 +3,8 @@ export type wsMessage =
   | wsCreateRoom
   | wsAddUserToRoom
   | wsAddShip
-  | wsAttack;
+  | wsAttack
+  | wsRandomAttack;
 
 export type wsReg = {
   type: 'reg';
@@ -59,4 +60,13 @@ export type attackData = {
   x: number;
   y: number;
   indexPlayer: number /* id of the player in the current game */;
+};
+
+export type wsRandomAttack = {
+  type: 'randomAttack';
+  data: {
+    gameId: number;
+    indexPlayer: number /* id of the player in the current game */;
+  };
+  id: 0;
 };

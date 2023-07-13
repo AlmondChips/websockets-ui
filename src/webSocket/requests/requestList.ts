@@ -12,3 +12,4 @@ requests.set('create_room', createRoom);
 requests.set('add_user_to_room', addUserToRoom);
 requests.set('add_ships', addShips);
 requests.set('attack', attack);
+requests.set('randomAttack', attack);
