@@ -28,17 +28,17 @@ export class Users {
   }
 
   static setWinner(winner: User) {
-    console.log('UP win');
-
     winner.wins++;
   }
 
   static updateWinners() {
     const response: unknown = {
       type: 'update_winners',
-      data: this.users.map((user) => {
-        return { name: user.name, wins: user.wins };
-      }),
+      data: this.users
+        .map((user) => {
+          return { name: user.name, wins: user.wins };
+        })
+        .sort((a, b) => b.wins - a.wins),
       id: 0,
     };
 

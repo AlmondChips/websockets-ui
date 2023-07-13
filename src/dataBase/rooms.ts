@@ -1,7 +1,7 @@
-import { dataBase } from './db';
-import { User } from './users';
 import { wsResponse } from '../types/wsResponse';
 import { broadCast } from '../utils/broadCast';
+import { dataBase } from './db';
+import { User } from './users';
 
 export interface Room {
   id: number;
@@ -18,7 +18,7 @@ export class Rooms {
       room.players.find((p) => p.sessionId === creator.sessionId),
     );
     if (isAlreadyOpenedRoom) {
-      console.log(creator.name, 'Not allowed to open new rooms!');
+      console.log(creator.name, 'is Not allowed to open new rooms!');
 
       return;
     }
@@ -27,13 +27,11 @@ export class Rooms {
       players: [creator],
     };
     this.openRooms.push(newRoom);
-    console.log('Created room with id', newRoom.id, this.roomsCounter);
-    console.log(`Rooms`, this.openRooms);
+    console.log('Created room with id', newRoom.id);
     this.roomsCounter = ++this.roomsCounter;
   }
 
   static addUserToRoom(user: User, roomIndex: number) {
-    console.log(`Requested room index: ${roomIndex}`);
     const roomToFill: Room | undefined = this.openRooms.find(
       (room) => room.id === roomIndex,
     );
@@ -41,10 +39,11 @@ export class Rooms {
       roomToFill &&
       !roomToFill.players.find((p) => p.sessionId === user.sessionId)
     ) {
+      console.log(
+        `Add user with id=${user.sessionId} to room with index=${roomIndex}`,
+      );
       roomToFill.players.push(user);
-      console.log('Shodnt log');
     }
-    console.log(roomToFill?.players);
     if (roomToFill?.players.length === 2) {
       this.fullRooms.push(roomToFill);
       dataBase.games.createGame(roomToFill.players, roomToFill.id);

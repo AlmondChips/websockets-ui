@@ -7,7 +7,6 @@ import { User } from '../../dataBase/users';
 
 export const register: wsAction = (recivedMessage, wsClient, sessionId) => {
   const { name, password } = (recivedMessage as wsReg).data;
-  console.log('It is reg, with id:', sessionId);
 
   if (!sessionId) return;
   const newUser: User = {

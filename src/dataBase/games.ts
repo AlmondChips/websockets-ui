@@ -64,8 +64,6 @@ export class Games {
   }
 
   static addShips(message: wsAddShip) {
-    console.log(`Ships objects before adding:`, this.games);
-
     const activeGame = this.getGame(message.data.gameId);
     activeGame?.players.forEach((player) => {
       if (player.user.sessionId === message.data.indexPlayer) {
@@ -74,13 +72,10 @@ export class Games {
     });
 
     console.log(`Added ships for id(${message.data.indexPlayer}) player`);
-    console.log(`Ships objects after adding:`, this.games);
     if (activeGame) {
-      console.log('Checking for ready...');
       const [isFirstReady, isSecondReady] = activeGame.players.map(
         (player) => player.ships !== undefined,
       );
-      console.log(isFirstReady, isSecondReady);
       if (isFirstReady && isSecondReady) {
         this.startGame(message);
       }
@@ -99,13 +94,12 @@ export class Games {
           },
           id: 0,
         };
-        console.log(response);
         sendMessage(response as wsResponse, player.user.clientObject);
         this.sendTurn(currentGame.players[0].user, currentGame.idGame);
       });
     }
 
-    console.log('Started the game');
+    console.log(`Started the game with id=${currentGame?.idGame}`);
   }
 
   static sendTurn(whoseTurn: User, gameId: number) {
@@ -166,7 +160,6 @@ export class Games {
         if (hitBox.x === attackData.x && hitBox.y === attackData.y) {
           if (!ship.hittenParts) ship.hittenParts = [hitBox];
           else ship.hittenParts?.push(hitBox);
-          console.log(ship.hittenParts, ship.length);
 
           if (ship.hittenParts && ship.hittenParts?.length < ship.length) {
             response.data.status = 'shot';
@@ -191,13 +184,13 @@ export class Games {
           if (attackSender) {
             this.sendTurn(attackSender, game.idGame);
           }
-          console.log(`Registered a hit!`, response);
+          console.log(`Registered a hit!`);
           return;
         }
       });
     });
     if (response.data.status) return;
-    console.log(`Registered a miss!`, response);
+    console.log(`Registered a miss!`);
     response.data.status = 'miss';
     attackedPlayer.unabledFields?.push({ x: attackData.x, y: attackData.y });
     broadCast(

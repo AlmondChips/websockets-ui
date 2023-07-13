@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.parseMessageWithData = exports.sendMessage = void 0;
+exports.sendMessage = exports.parseMessageWithData = void 0;
 const parseMessageWithData = (data) => {
     const parsedData = JSON.parse(data.toString());
-    let result;
-    if (parsedData.data) {
-        result = { ...parsedData, data: JSON.parse(parsedData.data) };
-        return result;
-    }
+    const result = {
+        ...parsedData,
+        data: parsedData.data ? JSON.parse(parsedData.data) : '',
+    };
+    return result;
 };
 exports.parseMessageWithData = parseMessageWithData;
 const sendMessage = (data, client) => {

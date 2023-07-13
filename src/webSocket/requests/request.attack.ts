@@ -23,7 +23,6 @@ export const attack: wsAction = (message, _) => {
     } while (isUnable);
 
     data = { ...message.data, ...coords };
-    console.log(`Random attack: `, data);
   }
   dataBase.games.attack(data as attackData);
 };

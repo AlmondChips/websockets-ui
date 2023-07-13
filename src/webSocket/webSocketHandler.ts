@@ -9,13 +9,13 @@ export const onConnect = (wsClient: ws.WebSocket) => {
 
   wsClient.on('message', (data) => {
     const recivedMessage = parseMessageWithData(data);
+    console.log('Request:', recivedMessage);
     if (recivedMessage) {
       const action = requests.get(recivedMessage.type);
       if (action) {
         action(recivedMessage, wsClient, sessionId);
       }
     }
-    console.log('Request:', recivedMessage);
   });
 
   wsClient.on('close', () => {

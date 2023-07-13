@@ -1,18 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dataBase = void 0;
-class Users {
-    static addUser(newUser) {
-        const isNotUnique = this.users.find((user) => user.name === newUser.name);
-        if (isNotUnique) {
-            throw Error('User already exists!');
-        }
-        this.users.push(newUser);
-    }
-}
-Users.users = [];
+const games_1 = require("./games");
+const rooms_1 = require("./rooms");
+const users_1 = require("./users");
 class dataBase {
 }
 exports.dataBase = dataBase;
-dataBase.users = Users;
+dataBase.users = users_1.Users;
+dataBase.rooms = rooms_1.Rooms;
+dataBase.games = games_1.Games;
 //# sourceMappingURL=db.js.map
